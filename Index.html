@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TrashBox — Monitoring Pupuk &amp; Nutrisi Tanah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= AUTH ================= -->
+<div id="auth">
+  <div class="auth-card">
+    <div class="brand"><span class="dot"></span>TrashBox</div>
+
+    <div id="loginForm">
+      <h1>Login</h1>
+      <p class="sub">Masuk ke akun Anda untuk melanjutkan monitoring.</p>
+      <label for="lu">Username atau Email</label>
+      <input id="lu" type="text" placeholder="Masukkan username atau email">
+      <label for="lp">Password</label>
+      <input id="lp" type="password" placeholder="Masukkan password">
+      <div class="auth-error" id="loginErr">Username/email dan password wajib diisi.</div>
+      <button class="btn btn-primary" onclick="doLogin()">Login</button>
+      <div class="auth-switch">Belum punya akun? <button onclick="showRegister()">Daftar sekarang</button></div>
+    </div>
+
+    <div id="registerForm" style="display:none">
+      <h1>Register</h1>
+      <p class="sub">Membuat akun Anda untuk memulai monitoring.</p>
+      <label for="ru">Username</label>
+      <input id="ru" type="text" placeholder="Masukkan Username">
+      <label for="re">Email</label>
+      <input id="re" type="email" placeholder="Masukkan Email">
+      <label for="rp">Password</label>
+      <input id="rp" type="password" placeholder="Masukkan password">
+      <div class="auth-error" id="regErr">Lengkapi semua kolom untuk mendaftar.</div>
+      <button class="btn btn-primary" onclick="doRegister()">Register</button>
+      <div class="auth-switch">Sudah punya akun? <button onclick="showLogin()">Login</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app">
+  <div class="shell">
+    <nav class="side" id="sideNav">
+      <div class="brand"><span class="dot"></span>TrashBox</div>
+      <a href="#" data-view="dashboard" class="active"><span class="ic">&#9632;</span>Dashboard</a>
+      <a href="#" data-view="sensor"><span class="ic">&#9679;</span>Data Sensor</a>
+      <a href="#" data-view="nutrisi"><span class="ic">&#127807;</span>Nutrisi Tanah</a>
+      <a href="#" data-view="pupuk"><span class="ic">&#9673;</span>Kapasitas Pupuk</a>
+      <a href="#" data-view="riwayat"><span class="ic">&#8635;</span>Riwayat</a>
+      <a href="#" data-view="notifikasi"><span class="ic">&#9679;</span>Notifikasi</a>
+      <a href="#" data-view="alat"><span class="ic">&#9881;</span>Manajemen Alat</a>
+      <a href="#" data-view="pengaturan"><span class="ic">&#9776;</span>Pengaturan</a>
+      <a href="#" onclick="logout();return false;" style="margin-top:14px;border-top:1px solid #2b4429;padding-top:16px;">&#8592; Keluar</a>
+    </nav>
+
+    <main>
+      <header class="top">
+        <button id="menuBtn" onclick="document.getElementById('sideNav').classList.toggle('open')">&#9776;</button>
+        <div class="updated" id="headTitle">Dashboard</div>
+        <div class="updated">Terakhir diperbarui: 20 Mei 2025 08:45</div>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section class="view" data-view="dashboard">
+        <h2>Monitoring Pupuk &amp; Nutrisi Tanah</h2>
+        <p class="lede">Pantau kondisi pupuk dan nutrisi tanah secara real-time.</p>
+        <div class="grid3" style="margin-bottom:18px;">
+          <div class="card">
+            <h3>Kapasitas Pupuk</h3>
+            <div class="ring-row">
+              <svg width="76" height="76" viewBox="0 0 76 76">
+                <circle cx="38" cy="38" r="32" fill="none" stroke="#eceadf" stroke-width="9"/>
+                <circle cx="38" cy="38" r="32" fill="none" stroke="#3f6b3a" stroke-width="9" stroke-linecap="round"
+                  stroke-dasharray="201" stroke-dashoffset="56" transform="rotate(-90 38 38)"/>
+                <text x="38" y="43" text-anchor="middle" font-size="16" font-weight="700" fill="#22291f">72%</text>
+              </svg>
+              <div>
+                <div style="font-size:.85rem;color:var(--ink-soft)">Tersisa 720 / 1000 L</div>
+                <div style="font-weight:700;color:var(--soil)">Normal</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Nutrisi Tanah</h3>
+            <div style="font-size:1.4rem;font-weight:700;color:var(--ok)">Seimbang</div>
+            <p style="font-size:.85rem;color:var(--ink-soft);margin-top:4px;">Kondisi optimal untuk tanaman</p>
+          </div>
+          <div class="card">
+            <h3>Perangkat Aktif</h3>
+            <div class="stat-big">4</div>
+            <p style="font-size:.85rem;color:var(--ink-soft)">alat terhubung</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <h3>Ringkasan Kapasitas Pupuk</h3>
+            <table>
+              <tr><td>NPK</td><td>72%</td><td><span class="tag ok">Normal</span></td></tr>
+              <tr><td>Urea</td><td>58%</td><td><span class="tag ok">Normal</span></td></tr>
+              <tr><td>Pupuk Organik</td><td>81%</td><td><span class="tag ok">Normal</span></td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Ringkasan Nutrisi Tanah</h3>
+            <table>
+              <tr><td>pH</td><td>6.5 ppm</td><td><span class="tag ok">Normal</span></td></tr>
+              <tr><td>Nitrogen (N)</td><td>120 ppm</td><td><span class="tag ok">Optimal</span></td></tr>
+              <tr><td>Fosfor (P)</td><td>45 ppm</td><td><span class="tag ok">Optimal</span></td></tr>
+              <tr><td>Kalium (K)</td><td>210 ppm</td><td><span class="tag ok">Optimal</span></td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- DATA SENSOR -->
+      <section class="view" data-view="sensor" hidden>
+        <h2>Data Sensor</h2>
+        <p class="lede">Riwayat pembacaan seluruh perangkat sensor.</p>
+        <div class="toolbar">
+          <div class="field"><label>Pilih Device</label><select><option>Semua Device</option></select></div>
+          <div class="field"><label>Lokasi</label><select><option>Semua Lokasi</option></select></div>
+          <div class="field"><label>Rentang Waktu</label><select><option>16 – 22 Mei 2025</option></select></div>
+          <button class="btn-outline">&#8681; Ekspor PDF</button>
+          <button class="btn-outline">&#8681; Ekspor Excel</button>
+        </div>
+        <div class="tablewrap" style="margin-bottom:18px;">
+          <table>
+            <tr><th>Waktu</th><th>Alat</th><th>Lokasi</th><th>Pupuk %</th><th>pH</th><th>N</th><th>P</th><th>K</th><th>Status</th></tr>
+            <tr><td>22 Mei 10:30</td><td>Sensor 1 - Greenhouse</td><td>Greenhouse Utama</td><td>72</td><td>6.5</td><td>120</td><td>45</td><td>180</td><td><span class="tag ok">Normal</span></td></tr>
+            <tr><td>22 Mei 09:30</td><td>Sensor 2 - Kebun Utara</td><td>Kebun Utara</td><td>68</td><td>6.4</td><td>118</td><td>42</td><td>175</td><td><span class="tag ok">Normal</span></td></tr>
+            <tr><td>22 Mei 08:30</td><td>Sensor 3 - Kebun Selatan</td><td>Kebun Selatan</td><td>74</td><td>6.6</td><td>125</td><td>47</td><td>182</td><td><span class="tag ok">Normal</span></td></tr>
+            <tr><td>22 Mei 07:30</td><td>Sensor 4 - Lahan Barat</td><td>Lahan Barat</td><td>58</td><td>6.2</td><td>98</td><td>35</td><td>150</td><td><span class="tag warn">Peringatan</span></td></tr>
+            <tr><td>22 Mei 06:30</td><td>Sensor 1 - Greenhouse</td><td>Greenhouse Utama</td><td>70</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="tag ok">Normal</span></td></tr>
+          </table>
+        </div>
+        <div class="grid2">
+          <div class="card"><h3>Tren Kapasitas Pupuk (%)</h3>
+            <svg viewBox="0 0 300 120" width="100%"><polyline fill="none" stroke="#5c8a52" stroke-width="3"
+              points="10,40 60,32 110,55 160,45 210,80 260,20" /></svg>
+          </div>
+          <div class="card"><h3>Tren Nutrisi Tanah (ppm)</h3>
+            <svg viewBox="0 0 300 120" width="100%">
+              <polyline fill="none" stroke="#5c8a52" stroke-width="3" points="10,45 60,44 110,44 160,44 210,43 260,43"/>
+              <polyline fill="none" stroke="#c9863a" stroke-width="3" points="10,85 60,85 110,85 160,85 210,84 260,84"/>
+              <polyline fill="none" stroke="#3b6ea5" stroke-width="3" points="10,25 60,24 110,25 160,24 210,25 260,24"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- NUTRISI TANAH -->
+      <section class="view" data-view="nutrisi" hidden>
+        <h2>Status Nutrisi Tanah</h2>
+        <p class="lede">Ringkasan kondisi nutrisi tanah pada lahan Anda.</p>
+        <div class="grid2">
+          <div class="card"><h3>pH Tanah</h3><div class="stat-big">6.5</div>
+            <div style="font-weight:700;color:var(--ok)">Seimbang — Kondisi ideal</div>
+            <div class="bar-track"><div class="bar-fill" style="width:56%"></div></div>
+            <div class="scale"><span>4.0</span><span>7.0</span><span>9.0</span></div>
+          </div>
+          <div class="card"><h3>Nitrogen</h3><div class="stat-big">68%</div>
+            <div style="font-weight:700;color:var(--ok)">Optimal — Ketersediaan baik</div>
+            <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
+            <div class="scale"><span>0%</span><span>Optimal</span><span>100%</span></div>
+          </div>
+          <div class="card"><h3>Fosfor</h3><div class="stat-big">54%</div>
+            <div style="font-weight:700;color:var(--ok)">Optimal — Ketersediaan baik</div>
+            <div class="bar-track"><div class="bar-fill" style="width:54%"></div></div>
+            <div class="scale"><span>0%</span><span>Optimal</span><span>100%</span></div>
+          </div>
+          <div class="card"><h3>Kalium</h3><div class="stat-big">31%</div>
+            <div style="font-weight:700;color:var(--amber)">Rendah — Perlu peningkatan</div>
+            <div class="bar-track"><div class="bar-fill warn" style="width:31%"></div></div>
+            <div class="scale"><span>0%</span><span>Optimal</span><span>100%</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- KAPASITAS PUPUK -->
+      <section class="view" data-view="pupuk" hidden>
+        <h2>Status Kapasitas Pupuk</h2>
+        <p class="lede">Ringkasan kapasitas persediaan pupuk pada lahan Anda.</p>
+        <div class="grid3" style="margin-bottom:16px;">
+          <div class="card"><h3>Pupuk NPK</h3><div class="stat-big">72%</div>
+            <div style="font-weight:700;color:var(--ok)">Normal</div>
+            <div class="bar-track"><div class="bar-fill" style="width:72%"></div></div>
+            <p style="font-size:.78rem;color:var(--ink-soft);margin-top:8px;">Terakhir sensor: 20 Mei 2025 08:45</p>
+          </div>
+          <div class="card"><h3>Urea</h3><div class="stat-big">28%</div>
+            <div style="font-weight:700;color:var(--amber)">Hampir Kosong</div>
+            <div class="bar-track"><div class="bar-fill warn" style="width:28%"></div></div>
+            <p style="font-size:.78rem;color:var(--ink-soft);margin-top:8px;">Terakhir sensor: 20 Mei 2025 08:45</p>
+          </div>
+          <div class="card"><h3>Organik</h3><div class="stat-big">85%</div>
+            <div style="font-weight:700;color:var(--ok)">Normal</div>
+            <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+            <p style="font-size:.78rem;color:var(--ink-soft);margin-top:8px;">Terakhir sensor: 20 Mei 2025 08:45</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Status Keseluruhan</h3>
+          <div class="stat-big">62% <span class="tag ok" style="vertical-align:middle;">Normal</span></div>
+          <p style="font-size:.88rem;color:var(--ink-soft);margin-top:8px;">Persediaan pupuk dalam kondisi aman. Lanjutkan pemantauan rutin untuk menjaga ketersediaan.</p>
+        </div>
+      </section>
+
+      <!-- RIWAYAT -->
+      <section class="view" data-view="riwayat" hidden>
+        <h2>Riwayat Pemantauan</h2>
+        <p class="lede">Lihat tren kapasitas pupuk dan nutrisi tanah selama periode terpilih.</p>
+        <div class="toolbar">
+          <div class="pill-group">
+            <button>Harian</button><button class="active">Mingguan</button><button>Bulanan</button>
+          </div>
+          <select><option>5 – 20 Mei 2025</option></select>
+        </div>
+        <div class="grid2" style="margin-bottom:16px;">
+          <div class="card"><h3>Kapasitas Pupuk (%)</h3>
+            <svg viewBox="0 0 300 100" width="100%">
+              <polyline fill="none" stroke="#5c8a52" stroke-width="3" points="10,25 90,20 170,35 260,65"/>
+              <polyline fill="none" stroke="#c9863a" stroke-width="3" points="10,40 90,45 170,55 260,80"/>
+            </svg>
+          </div>
+          <div class="card"><h3>Nutrisi Tanah (%)</h3>
+            <svg viewBox="0 0 300 100" width="100%">
+              <polyline fill="none" stroke="#5c8a52" stroke-width="3" points="10,25 90,22 170,25 260,30"/>
+              <polyline fill="none" stroke="#c9863a" stroke-width="3" points="10,45 90,48 170,50 260,55"/>
+              <polyline fill="none" stroke="#d1b23a" stroke-width="3" points="10,60 90,62 170,65 260,68"/>
+            </svg>
+          </div>
+        </div>
+        <div class="grid3">
+          <div class="card"><h3>Rata-rata Kapasitas Pupuk</h3><div class="stat-big">54%</div><p style="font-size:.8rem;color:var(--ink-soft)">-8% dari periode sebelumnya</p></div>
+          <div class="card"><h3>Rata-rata Nutrisi Tanah</h3><div class="stat-big">62%</div><p style="font-size:.8rem;color:var(--ink-soft)">-3% dari periode sebelumnya</p></div>
+          <div class="card"><h3>Nitrogen Rata-rata</h3><div class="stat-big">64%</div><p style="font-size:.8rem;color:var(--ink-soft)">-2% dari periode sebelumnya</p></div>
+        </div>
+      </section>
+
+      <!-- NOTIFIKASI -->
+      <section class="view" data-view="notifikasi" hidden>
+        <h2>Notifikasi</h2>
+        <p class="lede">Informasi penting mengenai kondisi lahan dan perangkat Anda.</p>
+        <button class="btn-solid" style="margin-bottom:18px;">Tandai semua sudah dibaca</button>
+
+        <div class="notif"><div class="ic-circ warn">!</div>
+          <div><span class="badge-new">Baru</span><div style="font-weight:700;color:var(--soil)">Urea hampir habis</div>
+          <div style="font-size:.85rem;color:var(--ink-soft)">Stok pupuk Urea di Gudang Utama tersisa sedikit.</div></div>
+          <div class="meta">20 Mei 2025 08:35</div>
+        </div>
+        <div class="notif"><div class="ic-circ warn">!</div>
+          <div><span class="badge-new">Baru</span><div style="font-weight:700;color:var(--soil)">Kalium rendah</div>
+          <div style="font-size:.85rem;color:var(--ink-soft)">Kadar Kalium pada Lahan 2 berada di bawah optimal.</div></div>
+          <div class="meta">20 Mei 2025 07:50</div>
+        </div>
+        <div class="notif"><div class="ic-circ ok">&#10003;</div>
+          <div><div style="font-weight:700;color:var(--soil)">Data sensor berhasil tersimpan</div>
+          <div style="font-size:.85rem;color:var(--ink-soft)">Data sensor kelembapan Lahan 1 telah tersimpan.</div></div>
+          <div class="meta">20 Mei 2025 06:20</div>
+        </div>
+        <div class="notif"><div class="ic-circ ok">i</div>
+          <div><div style="font-weight:700;color:var(--soil)">Perangkat kembali online</div>
+          <div style="font-size:.85rem;color:var(--ink-soft)">Sensor Suhu Lahan 3 telah kembali online.</div></div>
+          <div class="meta">20 Mei 2025 05:45</div>
+        </div>
+      </section>
+
+      <!-- MANAJEMEN ALAT -->
+      <section class="view" data-view="alat" hidden>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+          <div><h2>Manajemen Alat</h2><p class="lede">Kelola perangkat pemantauan pada lahan Anda.</p></div>
+          <button class="btn-solid">+ Tambah Alat</button>
+        </div>
+        <div class="card" style="margin-bottom:16px;max-width:260px;">
+          <h3>Total Alat Terdaftar</h3><div class="stat-big">3</div><p style="font-size:.82rem;color:var(--ink-soft)">Perangkat</p>
+        </div>
+        <div class="card">
+          <div class="device-row"><div><span class="dstatus"></span><strong>Trash Box 1</strong></div><span class="tag ok">Terisi</span></div>
+          <div class="device-row"><div><span class="dstatus off"></span><strong>Trash Box 2</strong></div><span class="tag warn">Kosong</span></div>
+          <div class="device-row"><div><span class="dstatus"></span><strong>Trash Box 3</strong></div><span class="tag ok">Terisi</span></div>
+        </div>
+      </section>
+
+      <!-- PENGATURAN -->
+      <section class="view" data-view="pengaturan" hidden>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+          <div><h2>Pengaturan Sistem</h2><p class="lede">Kelola profil, notifikasi, satuan data, dan ambang batas peringatan.</p></div>
+          <button class="btn-solid">Simpan Perubahan</button>
+        </div>
+        <div class="grid2" style="margin-bottom:16px;">
+          <div class="card"><h3>Profil Pengguna</h3>
+            <label>Nama Lengkap</label><input type="text" value="Andi Pratama">
+            <label>Email</label><input type="text" value="andi.pratama@example.com">
+          </div>
+          <div class="card"><h3>Preferensi Notifikasi</h3>
+            <div class="setting-row">Peringatan pH Tanah <button class="toggle"><span></span></button></div>
+            <div class="setting-row">Peringatan Nitrogen <button class="toggle"><span></span></button></div>
+            <div class="setting-row">Peringatan Fosfor <button class="toggle"><span></span></button></div>
+            <div class="setting-row">Peringatan Kalium <button class="toggle off"><span></span></button></div>
+            <div class="setting-row">Ringkasan Mingguan <button class="toggle"><span></span></button></div>
+          </div>
+        </div>
+        <div class="grid3">
+          <div class="card"><h3>Satuan Data</h3>
+            <div class="setting-row"><span>Persen (%)</span><input type="radio" name="unit" checked></div>
+            <div class="setting-row"><span>ppm</span><input type="radio" name="unit"></div>
+          </div>
+          <div class="card"><h3>Ambang Batas Peringatan</h3>
+            <div class="setting-row">Nitrogen rendah &lt; <input type="text" value="40%" style="width:60px;padding:5px 8px;"></div>
+            <div class="setting-row">Fosfor rendah &lt; <input type="text" value="30%" style="width:60px;padding:5px 8px;"></div>
+            <div class="setting-row">Kalium rendah &lt; <input type="text" value="25%" style="width:60px;padding:5px 8px;"></div>
+          </div>
+          <div class="card"><h3>Ambang Batas Pupuk</h3>
+            <div class="setting-row">Ketersediaan rendah <input type="text" value="20%" style="width:60px;padding:5px 8px;"></div>
+            <div class="setting-row">Ketersediaan kritis <input type="text" value="10%" style="width:60px;padding:5px 8px;"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
